@@ -1,16 +1,19 @@
-# React + Vite
+# SDLC for AI rBuilder App
+- Development
+    - Frontend : React
+    - Database : JSON Server
+- Deployment
+    - Vercel/Netlify, Render
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Steps for Creating REact Application
+    1. Create & run react app using vite
+    2. Remove all code from index.css & App.css file. Update App.jsx file
+    3. Install or Add packages to the project
+        - Update website title & icon
+        - Add CDN link for bootstrap, google fonts
+        - Install material UI , react-icons, react-router-dom
+    4. Create pages folder inside src to hold diff pages of react app, and create react component for the same
+    5. Create components folder inside src to hold diff components which is part of webpages of react app, and create react components for the same
+    6. Set up path for each page of the react app using react-router-dom library
+    7. Design the app
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
