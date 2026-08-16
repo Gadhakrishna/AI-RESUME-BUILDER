@@ -1,8 +1,28 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { MdDelete } from "react-icons/md";
+import {getAllResumesAPI} from '../services/apiService'
+import { useEffect, useState } from 'react'
+
 
 function Saved() {
+
+  const [allResumes,setAllResumes] = useState([])
+  console.log(allResumes);
+
+  useEffect(()=>{
+    getAllResumes()
+  },[])
+  
+
+  const getAllResumes= async () => {
+    const response = await getAllResumesAPI()
+    if(response.status==200){
+      setAllResumes(response.data)
+    }
+  }
+
+
   return (
     <div className='my-5 container d-flex justify-content-center align-items-center flex-column'>
       <h1>All Saved Resumes</h1>
@@ -16,13 +36,34 @@ function Saved() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td><Link to={'/resumes/id'} >NAME</Link></td>
-            <td>JOB</td>
-            <td><button class="btn text-danger"><MdDelete /></button></td>
+  {
+    allResumes?.length > 0 ?
+      allResumes?.map((resume, index) => {
+        return (
+          <tr key={resume?.id}>
+            <td>{index + 1}</td>
+            <td>
+              <Link to={`/resumes/${resume?.id}`}>
+                {resume?.fullName?.toUpperCase()}
+              </Link>
+            </td>
+            <td>{resume?.job?.toUpperCase()}</td>
+            <td>
+              <button className="btn text-danger">
+                <MdDelete />
+              </button>
+            </td>
           </tr>
-        </tbody>
+        )
+      })
+      :
+      <tr>
+        <td colSpan="4" className="text-center">
+          No Resumes added yet!!!
+        </td>
+      </tr>
+  }
+</tbody>
       </table>
     </div>
   )

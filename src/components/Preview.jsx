@@ -17,7 +17,7 @@ function Preview({resumeDetails}) {
       <Divider className='bg-dark my-3'/>
       <h4>Technical Skills</h4>
       {/* duplicate according to skill number */}
-      { resumeDetails?.skills.map(item=>(
+      { resumeDetails?.skills?.map(item=>(
         <span key={item}><Button variant="text" className='text-dark'>{item}</Button></span>
       ))}
       <Divider className='bg-dark my-3'/>
