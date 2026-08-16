@@ -22,7 +22,7 @@ function Header() {
             sx={{ mr: 2 }}
           >
            {/*app icon*/ }
-           <img width={'40px'} src="https://e7.pngegg.com/pngimages/970/490/png-clipart-resume-thumbnail.png" alt="icon"/>
+           <img width={'40px'} src="/icon.png" alt="icon"/>
           </IconButton>
           <Typography variant="h5" component="div" sx={{ flexGrow: 1,fontFamily: "Solway" }}>
            <Link to={'/'} className='text-light text-decoration-none' > AI rBuilder</Link> 
