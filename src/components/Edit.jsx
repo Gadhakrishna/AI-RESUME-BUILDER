@@ -11,6 +11,9 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { IoCloseSharp } from "react-icons/io5";
 import jobRole from "../assets/jobRole.json";
+import { toast } from "react-toastify";
+import { editResumeAPI } from "../services/apiService";
+
 
 const style = {
   position: "absolute",
@@ -30,10 +33,78 @@ function Edit({ resumeDetails, setResumeDetails }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const skillRef=React.useRef()
+
 
   const removeSkill = (skill)=>{
     setResumeDetails({...resumeDetails,skills:resumeDetails.skills.filter(item=>item!=skill)})
   }
+
+  const addSkill =(skill) =>{
+    console.log(skill);
+
+    
+    if(skill){
+      if(resumeDetails?.skills?.map(item=>item.toLowerCase()).includes(skill.toLowerCase())){
+        toast.warning("Given skill is already available... Please add another!!!")
+      }else{
+        setResumeDetails({...resumeDetails,skills:[...resumeDetails?.skills,skill]})
+      }
+      skillRef.current.value=""
+    }else{
+      toast.info("Input valid skill!!!")
+    }
+  }
+
+
+  const handleUpdateResume = async () => {
+  const {
+    fullName,
+    location,
+    job,
+    email,
+    phone,
+    linkedin,
+    github,
+    degree,
+    college,
+    year,
+    skills,
+    summary,
+  } = resumeDetails;
+
+  if (
+    fullName &&
+    location &&
+    job &&
+    email &&
+    phone &&
+    linkedin &&
+    github &&
+    degree &&
+    college &&
+    year &&
+    skills.length > 0 &&
+    summary
+  ) {
+    const response = await editResumeAPI(
+      resumeDetails.id,
+      resumeDetails
+    );
+
+    console.log(response);
+
+    if (response.status === 200) {
+      toast.success("Resume updated successfully!!!");
+      setTimeout(() => {
+        handleClose()
+      }, 2500);
+      handleClose();
+    }
+  } else {
+    toast.warning("Please fill the form completely!!!");
+  }
+};
 
   return (
     <div>
@@ -112,7 +183,7 @@ function Edit({ resumeDetails, setResumeDetails }) {
                 </FormControl>
               </div>
             </div>
-            ;{/* contact details */}
+            {/* contact details */}
             <div>
               <h3>Contact Details</h3>
               <div className="p-3 row">
@@ -210,11 +281,12 @@ function Edit({ resumeDetails, setResumeDetails }) {
               <h3>Skills</h3>
               <div className="d-flex p-3">
                 <input
+                  ref={skillRef}
                   type="text"
                   placeholder="Add New Skill"
                   className="form-control"
                 />
-                <Button>add</Button>
+                <Button onClick={()=>addSkill(skillRef.current.value)} style={{color:'#714a2f'}} >add</Button>
               </div>
               <h6>Added Skills </h6>
               <div className="p-3 d-flex flex-wrap justify-content-between">
@@ -251,7 +323,7 @@ function Edit({ resumeDetails, setResumeDetails }) {
               </div>
             </div>
             {/* update button */}
-            <button
+            <button onClick={handleUpdateResume}
               className="btn text-light mt-3"
               style={{ backgroundColor: "#714a2f" }}
             >
