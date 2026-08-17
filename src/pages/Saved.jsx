@@ -4,13 +4,20 @@ import { MdDelete } from "react-icons/md";
 import {deleteResumeAPI, getAllResumesAPI} from '../services/apiService'
 import { useEffect, useState } from 'react'
 import { IoSearch } from "react-icons/io5";
+import { IoPlayBackSharp } from "react-icons/io5";
+import { IoMdFastforward } from "react-icons/io";
 
 function Saved() {
 
   const [allResumes,setAllResumes] = useState([])
   const [searchKey,setSearchKey] = useState("")
   const [dummyAllResumes,setDummyAllResumes] = useState([])
-  
+  const [currentPage,setCurrentPage] = useState(1);
+  const rowsPerPage = 4;
+  const lastIndexOfCurrentPage = currentPage * rowsPerPage
+  const firstIndexOfCurrentPage = lastIndexOfCurrentPage - rowsPerPage
+  const currentResumes = allResumes.slice(firstIndexOfCurrentPage,lastIndexOfCurrentPage)
+  const totalPages = Math.ceil(allResumes.length / rowsPerPage);
   
 
   useEffect(()=>{
@@ -45,7 +52,7 @@ function Saved() {
       <h1>All Saved Resumes</h1>
       <p style={{textAlign:'justify'}} className='my-5'>All resumes submitted to the platform in one place, allowing administrators or recruiters to efficiently view, search, filter, and manage candidate profiles. It provides a quick overview of available candidates and their key details, making the recruitment and candidate-selection process more organized and efficient.</p>
       <div className='d-flex justify-content-center align-items-center w-50'>
-        <input onChange={(e)=>setSearchKey(e.target.value)} type="text" placeholder='Search Candidate by their Job Roles' className='form-control'/>
+        <input onChange={(e)=>{setSearchKey(e.target.value); setCurrentPage(1); }} type="text" placeholder='Search Candidate by their Job Roles' className='form-control'/>
         <IoSearch style={{marginLeft:'-30px'}} />
       </div>
       <table className='my-5 table table-hover table-stripped'>
@@ -59,8 +66,8 @@ function Saved() {
         </thead>
         <tbody>
           {
-            allResumes?.length > 0 ?
-              allResumes?.map((resume, index) => {
+            currentResumes?.length > 0 ?
+              currentResumes?.map((resume, index) => {
                 return (
                   <tr key={resume?.id}>
                     <td>{index + 1}</td>
@@ -87,6 +94,19 @@ function Saved() {
           }
         </tbody>
       </table>
+      <div className='d-flex align-items-center'>
+      <button className='btn' onClick={()=>setCurrentPage(currentPage-1)} disabled={currentPage==1}>
+        <IoPlayBackSharp />
+      </button>
+
+        {currentPage} of {totalPages}
+
+      <button className='btn' onClick={()=>setCurrentPage(currentPage+1)} disabled={currentPage==totalPages || totalPages==0}>
+          <IoMdFastforward />
+      </button>  
+
+
+      </div>
     </div>
   )
 }

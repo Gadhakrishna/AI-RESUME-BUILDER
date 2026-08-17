@@ -31,6 +31,6 @@ export const downloadResumeAPI = async (resumeDetails)=>{
 }
 
 // get all download list api : called by Download component when page open in browser
-export const getAlldownloadAPI = async ()=>{
-   return await axiosService("GET","/downloads",{})
-}
+export const getAlldownloadAPI = async () => {
+  return await axiosService("GET", "/downloads", {});
+};
