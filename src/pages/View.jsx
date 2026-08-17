@@ -39,11 +39,7 @@ function View() {
             {/* download */}
             <button style={{color:'#714a2f'}} className="btn me-2"><FaFileDownload /> Download CV</button>
             {/* edit */}
-            <Edit/>
-            {/* all resumes */}
-            {/* <Link to={'/all-resumes'} style={{color:'#714a2f'}} className='btn mx-2'><MdTextSnippet className='fs-3'/>All Resumes</Link> */}
-            {/* download history */}
-            {/* <Link to={'/downloads'} style={{color:'#714a2f'}} className='btn me-2'><MdRefresh  className='fs-3'/>Download History</Link> */}
+            <Edit resumeDetails={resume} setResumeDetails={setResume}/>
             {/* back */}
             <Link to={'/resume-details'} style={{color:'#714a2f'}} className='btn '><AiFillBackward className='fs-3'/>Home</Link>
           </div>
